@@ -23,19 +23,31 @@ class Robots:
       self.get_new_action()
 
   def get_new_action(self):
-    self.randomPick = random.randint(0,2)
+    self.randomPick = random.randint(0,3)
 
 
     # Robot Skill Level 1
-    if self.skillRating == 1:
+    if self.skillRating == 0:
       if self.randomPick == 0 or self.randomPick == 1 or self.randomPick == 2 or self.randomPick == 3:
         self.randomPick = 0
         self.action_time = int(numpy.random.normal(loc=45, scale=15, size=None))
         self.action_success_rate = 80
     #Robot skill level 2
-    if self.skillRating == 2:
+    if self.skillRating == 1:
       if self.randomPick == 0 or self.randomPick == 1 or self.randomPick == 2 or self.randomPick == 3:
         self.randomPick = 1
+        self.action_time = int(numpy.random.normal(loc=30, scale=15, size=None))
+        self.action_success_rate = 85
+    #Robot skill level 3
+    if self.skillRating == 2:
+      if self.randomPick == 0 or self.randomPick == 1 or self.randomPick == 2 or self.randomPick == 3:
+        self.randomPick = 2
+        self.action_time = int(numpy.random.normal(loc=30, scale=15, size=None))
+        self.action_success_rate = 85
+    #Robot skill level 4
+    if self.skillRating == 3:
+      if self.randomPick == 0 or self.randomPick == 1 or self.randomPick == 2 or self.randomPick == 3:
+        self.randomPick = 3
         self.action_time = int(numpy.random.normal(loc=30, scale=15, size=None))
         self.action_success_rate = 85
 
@@ -44,16 +56,18 @@ class Robots:
     if self.randomPick == 0:
       self.field.add_random_vault_cube(self.is_red_alliance)
 
-    # MySwitch
+    #MySwitch
     elif self.randomPick == 1:
       self.field.add_my_switch_cube(self.is_red_alliance)
 
-    # TheirSwitch
+    #TheirSwitch
     elif self.randomPick == 2:
       self.field.add_their_switch_cube(self.is_red_alliance)
 
-#C:\Program Files (x86)\Python36-32
-#variables  *make sure to add stuff for powerups*
+    #Scale
+    elif self.randomPick == 3:
+      self.field.add_scale_cube(self.is_red_alliance)
+
 
 
 # #Robot Function

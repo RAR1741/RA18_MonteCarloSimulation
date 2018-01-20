@@ -1,16 +1,20 @@
 class Switch:
     def __init__(self, is_red_alliance):
-      self.switch_cubes = 0
+      self.red_cubes = 0
+      self.blue_cubes = 0
 
-    def add_switch_cube(self):
-      self.switch_cubes += 1
+    def add_switch_cube(self, is_red_alliance):
+      if is_red_alliance == True:
+        self.red_cubes += 1
+      else:
+        self.blue_cubes +=1
 
     def switch_tilt(self):
-      if redCubes > blueCubes:
+      if  self.red_cubes > self.blue_cubes:
         pass
-      elif blueCubes > redCubes:
+      elif self.blue_cubes > self.red_cubes:
         pass
-      elif redCubes == blueCubes:
+      elif self.red_cubes == self.blue_cubes:
         pass 
       else:
         print("Something is wrong with the switch boi")
