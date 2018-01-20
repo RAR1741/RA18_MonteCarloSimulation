@@ -26,28 +26,17 @@ class Robots:
     self.randomPick = random.randint(0,3)
 
 
+
     # Robot Skill Level 1
-    if self.skillRating == 0:
+    if self.skillRating == 1:
       if self.randomPick == 0 or self.randomPick == 1 or self.randomPick == 2 or self.randomPick == 3:
         self.randomPick = 0
         self.action_time = int(numpy.random.normal(loc=45, scale=15, size=None))
         self.action_success_rate = 80
     #Robot skill level 2
-    if self.skillRating == 1:
-      if self.randomPick == 0 or self.randomPick == 1 or self.randomPick == 2 or self.randomPick == 3:
-        self.randomPick = 1
-        self.action_time = int(numpy.random.normal(loc=30, scale=15, size=None))
-        self.action_success_rate = 85
-    #Robot skill level 3
     if self.skillRating == 2:
       if self.randomPick == 0 or self.randomPick == 1 or self.randomPick == 2 or self.randomPick == 3:
-        self.randomPick = 2
-        self.action_time = int(numpy.random.normal(loc=30, scale=15, size=None))
-        self.action_success_rate = 85
-    #Robot skill level 4
-    if self.skillRating == 3:
-      if self.randomPick == 0 or self.randomPick == 1 or self.randomPick == 2 or self.randomPick == 3:
-        self.randomPick = 3
+        self.randomPick = 1
         self.action_time = int(numpy.random.normal(loc=30, scale=15, size=None))
         self.action_success_rate = 85
 
@@ -246,7 +235,7 @@ class Robots:
 #       parkedRobots += 1
 #       parkingTime = numpy.random.normal(loc=6, scale=3, size=None)
   
-  #testing
+  
   
 #   elif(RobotSkill == 7):
 #     vault = True
