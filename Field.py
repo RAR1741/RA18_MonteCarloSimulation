@@ -2,6 +2,7 @@ from Vault import Vault
 from Robots import Robots
 from Scale import Scale
 from Switch import Switch
+from Alliance import Alliance
 import random
 import array
 
@@ -16,15 +17,9 @@ class Field:
         self.scale = Scale(True)
 
         # Robots
-        self.red1Robot = Robots(self, True, "R1", self.get_random_skill())
-        self.red2Robot = Robots(self, True, "R2", self.get_random_skill())
-        self.red3Robot = Robots(self, True, "R3", self.get_random_skill())
-        red_alliance  = [self.red1Robot, self.red2Robot, self.red3Robot]
-        self.blue1Robot = Robots(self, False, "B1", self.get_random_skill())
-        self.blue2Robot = Robots(self, False, "B2", self.get_random_skill())
-        self.blue3Robot = Robots(self, False, "B3", self.get_random_skill())
-        blue_alliance = [self.blue1Robot, self.blue2Robot, self.blue3Robot]
-        self.alliances = [blue_alliance, red_alliance]
+        self.red_alliance  = Alliance(self, True)#self.red_alliance.points to edits
+        self.blue_alliance = Alliance(self, False)
+        self.alliances = [self.blue_alliance.robots, self.red_alliance.robots]
     def tick(self, time):
         print(f"Boost|Force|Lev : {self.red_vault.boost_cubes}|{self.red_vault.force_cubes}|{self.red_vault.lev_cubes}")
         print(f"My Red Cubes|Blue Cubes : {self.my_switch.red_cubes}|{self.my_switch.blue_cubes}")
@@ -55,5 +50,32 @@ class Field:
     def add_scale_cube(self, is_red_alliance):
         self.scale.add_scale_cube(is_red_alliance)
             
-    def get_random_skill(self):
-        return random.randint(0, 3)
+   
+
+    def points(self):
+        pass
+        # vault_points = (boost_cubes * 5) + (force_cubes * 5) + (lev_cubes * 5)
+        # switch_points =
+        # scale_points = 
+        # total_points = vault_points + switch_points + scale_points
+
+    def checkIfWin(self):
+        if self.red_alliance.points > self.blue_alliance.points:
+            print(f"The Red Alliance won!")
+        elif self.blue_alliance.points > self.red_alliance.points:
+            print(f"The Blue Alliance won!")
+        else:
+            print("Its a tie!")
+        
+
+    # def scale_points(self):
+    #     if self.red_cubes1 > self.blue_cubes1:
+    #         self.redpoints += 1
+    #     elif self.blue_cubes1 > self.red_cubes1:
+    #         self.bluepoints += 1
+
+    # def switch_points(self):
+    #     if  self.red_cubes > self.blue_cubes:
+    #         pass
+    #     elif self.blue_cubes > self.red_cubes:
+    #         pass

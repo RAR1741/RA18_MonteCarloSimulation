@@ -10,11 +10,6 @@ class Scale:
             self.red_cubes1 += 1
         else:
             self.blue_cubes1 += 1
-    # def scale_tilt(self):
-    #     if (self.scale_redcubes > self.scale_bluecubes):
-    #         self.redpoints += 1
-    #     elif (self.scale_redcubes < self.scale_bluecubes):
-    #         self.bluepoints += 1
-    #     else:
-    #         pass
+
+    
             

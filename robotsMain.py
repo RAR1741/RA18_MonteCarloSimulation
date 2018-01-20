@@ -41,7 +41,7 @@ for Time in range(0,150,1):
     Field.tick(Time)
 
 
-
+Field.checkIfWin()
 
 
 
