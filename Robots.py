@@ -246,7 +246,7 @@ class Robots:
 #       parkedRobots += 1
 #       parkingTime = numpy.random.normal(loc=6, scale=3, size=None)
   
-  
+  #testing
   
 #   elif(RobotSkill == 7):
 #     vault = True
