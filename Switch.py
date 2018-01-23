@@ -16,4 +16,6 @@ class Switch:
         elif is_red_alliance is False and self.blue_cubes > self.red_cubes:
             self.scale_state = 2
         else:
-            self.scale_state = 0        
+            self.scale_state = 0  
+
+    

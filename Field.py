@@ -50,18 +50,25 @@ class Field:
     def add_scale_cube(self, is_red_alliance):
         self.scale.add_scale_cube(is_red_alliance)
             
-    def switch_points(self, is_red_alliance):
-        if is_red_alliance and self.red_alliance.switch_tilt_state:
-            self.red_alliance.points += 1
-        elif is_red_alliance == False and self.blue_alliance.switch_tilt_state:
-            self.blue_alliance.points += 1 
+    def my_switch_points(self, is_red_alliance):
+        if is_red_alliance:
+            self.my_switch.switch_tilt_state(is_red_alliance)
+        else:
+            self.their_switch.switch_tilt_state(is_red_alliance)
+
+    def their_switch_points(self, is_red_alliance):
+        if is_red_alliance:
+            self.their_switch.switch_tilt_state(is_red_alliance)
+        else:
+            self.my_switch.switch_tilt_state(is_red_alliance)
     
     def scale_points(self, is_red_alliance):
-        if is_red_alliance and self.red_alliance.scale_tilt:
-            self.red_alliance.points += 1
-        elif is_red_alliance == False and self.blue_alliance.scale_tilt:
-            self.blue_alliance.points += 1
+        if is_red_alliance:
+            self.scale.scale_tilt_state(is_red_alliance)
+        else:
+            self.scale.scale_tilt_state(is_red_alliance)
     
+          
 
     def checkIfWin(self):
         if self.red_alliance.points > self.blue_alliance.points:

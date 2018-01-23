@@ -23,3 +23,5 @@ class Alliance():
     def make_alliance(self, num_robots):
         for i in range(1, num_robots + 1, 1):
             self.make_robot(i)
+
+    

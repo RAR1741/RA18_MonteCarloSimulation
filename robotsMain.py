@@ -33,9 +33,11 @@ from Field import Field
 Field = Field()
 
 for Time in range(0,150,1):
-  if(Time <=15):
+  if Time <=15:
     ##add in auto points
-    print("auto")
+    print("Auto")
+  elif Time >= 120:
+    print("Endgame")
   else:
     ##add in regular points
     Field.tick(Time)
