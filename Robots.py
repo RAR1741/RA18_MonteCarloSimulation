@@ -34,12 +34,156 @@ class Robots:
         self.action_time = int(numpy.random.normal(loc=45, scale=15, size=None))
         self.action_success_rate = 80
     #Robot skill level 2
-    if self.skillRating == 2:
+    elif self.skillRating == 2:
       if self.randomPick == 0 or self.randomPick == 1 or self.randomPick == 2 or self.randomPick == 3:
         self.randomPick = 1
         self.action_time = int(numpy.random.normal(loc=30, scale=15, size=None))
         self.action_success_rate = 85
-
+    
+    
+    
+    #Robot skill level 3
+    elif self.skillRating == 3:
+      if self.randomPick == 3:
+        self.randomPick == random.randint(0,2) 
+      if self.randomPick == 0:
+        self.randomPick = 0
+        self.action_time = int(numpy.random.normal(loc=30, scale=10, size=None))
+        self.action_success_rate = 85
+      elif self.randomPick == 1:
+        self.randomPick = 1
+        self.action_time = int(numpy.random.normal(loc=30, scale=15, size=None))
+        self.action_success_rate = 66
+      elif self.randomPick == 2:
+        self.randomPick = 2
+        self.action_time = int(numpy.random.normal(loc=30, scale=15, size=None))
+        self.action_success_rate = 66
+    #Robot skill level 4
+    elif self.skillRating == 3:
+      if self.randomPick == 3:
+        self.randomPick == random.randint(0,2)     
+      if self.randomPick == 0:
+        self.randomPick = 0
+        self.action_time = int(numpy.random.normal(loc=25, scale=8, size=None))
+        self.action_success_rate = 86
+      elif self.randomPick == 1:
+        self.randomPick = 1
+        self.action_time = int(numpy.random.normal(loc=35, scale=15, size=None))
+        self.action_success_rate = 66
+      elif self.randomPick == 2:
+        self.randomPick = 2
+        self.action_time = int(numpy.random.normal(loc=35, scale=15, size=None))
+        self.action_success_rate = 66
+    #Robot skill level 5
+    elif self.skillRating == 5:   
+      if self.randomPick == 0:
+        self.randomPick = 0
+        self.action_time = int(numpy.random.normal(loc=20, scale=6, size=None))
+        self.action_success_rate = 89
+      elif self.randomPick == 1:
+        self.randomPick = 1
+        self.action_time = int(numpy.random.normal(loc=20, scale=10, size=None))
+        self.action_success_rate = 78
+      elif self.randomPick == 2:
+        self.randomPick = 2
+        self.action_time = int(numpy.random.normal(loc=20, scale=10, size=None))
+        self.action_success_rate = 78
+      elif self.randomPick == 3:
+        self.randomPick = 3
+        self.action_time = int(numpy.random.normal(loc=30, scale=12.5, size=None))
+        self.action_success_rate = 72
+    #Robot skill level 6
+    elif self.skillRating == 6:   
+      if self.randomPick == 0:
+        self.randomPick = 0
+        self.action_time = int(numpy.random.normal(loc=15, scale=5, size=None))
+        self.action_success_rate = 92
+      elif self.randomPick == 1:
+        self.randomPick = 1
+        self.action_time = int(numpy.random.normal(loc=15, scale=7.5, size=None))
+        self.action_success_rate = 85
+      elif self.randomPick == 2:
+        self.randomPick = 2
+        self.action_time = int(numpy.random.normal(loc=15, scale=7.5, size=None))
+        self.action_success_rate = 85
+      elif self.randomPick == 3:
+        self.randomPick = 3
+        self.action_time = int(numpy.random.normal(loc=25, scale=10, size=None))
+        self.action_success_rate = 77
+    #Robot skill level 7
+    elif self.skillRating == 7:   
+      if self.randomPick == 0:
+        self.randomPick = 0
+        self.action_time = int(numpy.random.normal(loc=12.5, scale=4, size=None))
+        self.action_success_rate = 95
+      elif self.randomPick == 1:
+        self.randomPick = 1
+        self.action_time = int(numpy.random.normal(loc=12.5, scale=5, size=None))
+        self.action_success_rate = 88
+      elif self.randomPick == 2:
+        self.randomPick = 2
+        self.action_time = int(numpy.random.normal(loc=12.5, scale=5, size=None))
+        self.action_success_rate = 88
+      elif self.randomPick == 3:
+        self.randomPick = 3
+        self.action_time = int(numpy.random.normal(loc=20, scale=7.5, size=None))
+        self.action_success_rate = 85    
+    #Robot skill level 8
+    elif self.skillRating == 8:   
+      if self.randomPick == 0:
+        self.randomPick = 0
+        self.action_time = int(numpy.random.normal(loc=10, scale=3, size=None))
+        self.action_success_rate = 97
+      elif self.randomPick == 1:
+        self.randomPick = 1
+        self.action_time = int(numpy.random.normal(loc=10, scale=4.5, size=None))
+        self.action_success_rate = 90
+      elif self.randomPick == 2:
+        self.randomPick = 2
+        self.action_time = int(numpy.random.normal(loc=10, scale=4.5, size=None))
+        self.action_success_rate = 90
+      elif self.randomPick == 3:
+        self.randomPick = 3
+        self.action_time = int(numpy.random.normal(loc=15, scale=5, size=None))
+        self.action_success_rate = 90  
+    #Robot skill level 9
+    elif self.skillRating == 9:   
+      if self.randomPick == 0:
+        self.randomPick = 0
+        self.action_time = int(numpy.random.normal(loc=7.5, scale=2, size=None))
+        self.action_success_rate = 97
+      elif self.randomPick == 1:
+        self.randomPick = 1
+        self.action_time = int(numpy.random.normal(loc=8.75, scale=2.5, size=None))
+        self.action_success_rate = 95
+      elif self.randomPick == 2:
+        self.randomPick = 2
+        self.action_time = int(numpy.random.normal(loc=8.75, scale=2.5, size=None))
+        self.action_success_rate = 95
+      elif self.randomPick == 3:
+        self.randomPick = 3
+        self.action_time = int(numpy.random.normal(loc=12.5, scale=4, size=None))
+        self.action_success_rate = 95    
+    #Robot skill level 10
+    elif self.skillRating == 10:   
+      if self.randomPick == 0:
+        self.randomPick = 0
+        self.action_time = int(numpy.random.normal(loc=5, scale=2, size=None))
+        self.action_success_rate = 99
+      elif self.randomPick == 1:
+        self.randomPick = 1
+        self.action_time = int(numpy.random.normal(loc=7, scale=2, size=None))
+        self.action_success_rate = 99
+      elif self.randomPick == 2:
+        self.randomPick = 2
+        self.action_time = int(numpy.random.normal(loc=7, scale=2, size=None))
+        self.action_success_rate = 99
+      elif self.randomPick == 3:
+        self.randomPick = 3
+        self.action_time = int(numpy.random.normal(loc=10, scale=3, size=None))
+        self.action_success_rate = 98
+  
+  
   def do_action(self):
     # Vault
     if self.randomPick == 0:
