@@ -25,9 +25,11 @@ class Field:
         print(f"My Red Cubes|Blue Cubes : {self.my_switch.red_cubes}|{self.my_switch.blue_cubes}")
         print(f"Their Red Cubes|Blue Cubes : {self.their_switch.red_cubes}|{self.their_switch.blue_cubes}")
         print(f"Red Scale Cubes|Blue Scale Cubes : {self.scale.red_cubes1}|{self.scale.blue_cubes1}")
+        print(f"Red Points|Blue Points : {self.red_alliance.points}|{self.blue_alliance.points}")
         for alliance in self.alliances:
             for team in alliance:
                 team.tick(time)
+        
 
     def add_random_vault_cube(self, is_red_alliance):
         if is_red_alliance:
@@ -63,13 +65,13 @@ class Field:
             self.my_switch.switch_tilt_state(is_red_alliance)
     
     def scale_points(self, is_red_alliance):
-        if is_red_alliance:
-            self.scale.scale_tilt_state(is_red_alliance)
+        if self.scale.scale_tilt_state(is_red_alliance) == 1:
+            self.red_alliance.points += 1
+        elif self.scale.scale_tilt_state(is_red_alliance) == 2:
+            self.blue_alliance.points += 1 
         else:
-            self.scale.scale_tilt_state(is_red_alliance)
+            pass          
     
-          
-
     def checkIfWin(self):
         if self.red_alliance.points > self.blue_alliance.points:
             print(f"The Red Alliance won!")
