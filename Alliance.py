@@ -1,4 +1,6 @@
 from Robots import Robots
+from Switch import Switch
+from Scale import Scale
 import random
 class Alliance():
     def __init__(self, field, is_red_alliance):

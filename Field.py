@@ -50,14 +50,18 @@ class Field:
     def add_scale_cube(self, is_red_alliance):
         self.scale.add_scale_cube(is_red_alliance)
             
-   
-
-    def points(self):
-        pass
-        # vault_points = (boost_cubes * 5) + (force_cubes * 5) + (lev_cubes * 5)
-        # switch_points =
-        # scale_points = 
-        # total_points = vault_points + switch_points + scale_points
+    def switch_points(self, is_red_alliance):
+        if is_red_alliance and self.red_alliance.switch_tilt_state:
+            self.red_alliance.points += 1
+        elif is_red_alliance == False and self.blue_alliance.switch_tilt_state:
+            self.blue_alliance.points += 1 
+    
+    def scale_points(self, is_red_alliance):
+        if is_red_alliance and self.red_alliance.scale_tilt:
+            self.red_alliance.points += 1
+        elif is_red_alliance == False and self.blue_alliance.scale_tilt:
+            self.blue_alliance.points += 1
+    
 
     def checkIfWin(self):
         if self.red_alliance.points > self.blue_alliance.points:
@@ -68,14 +72,4 @@ class Field:
             print("Its a tie!")
         
 
-    # def scale_points(self):
-    #     if self.red_cubes1 > self.blue_cubes1:
-    #         self.redpoints += 1
-    #     elif self.blue_cubes1 > self.red_cubes1:
-    #         self.bluepoints += 1
 
-    # def switch_points(self):
-    #     if  self.red_cubes > self.blue_cubes:
-    #         pass
-    #     elif self.blue_cubes > self.red_cubes:
-    #         pass
