@@ -8,6 +8,7 @@ class Robots:
     self.is_red_alliance = is_red_alliance
     self.name = name
     self.skillRating = skillRating
+    self.get_endgame(skillRating)
 
     self.action_time = 0
     self.action_success_rate = 0
@@ -33,15 +34,14 @@ class Robots:
         self.randomPick = 0
         self.action_time = int(numpy.random.normal(loc=45, scale=15, size=None))
         self.action_success_rate = 80
+
     #Robot skill level 2
     elif self.skillRating == 2:
       if self.randomPick == 0 or self.randomPick == 1 or self.randomPick == 2 or self.randomPick == 3:
         self.randomPick = 1
         self.action_time = int(numpy.random.normal(loc=30, scale=15, size=None))
         self.action_success_rate = 85
-    
-    
-    
+
     #Robot skill level 3
     elif self.skillRating == 3:
       if self.randomPick == 3:
@@ -58,8 +58,9 @@ class Robots:
         self.randomPick = 2
         self.action_time = int(numpy.random.normal(loc=30, scale=15, size=None))
         self.action_success_rate = 66  
+
     #Robot skill level 4
-    elif self.skillRating == 3:
+    elif self.skillRating == 4:
       if self.randomPick == 3:
         self.randomPick == random.randint(0,2)     
       if self.randomPick == 0:
@@ -77,8 +78,9 @@ class Robots:
       elif self.randomPick == 4:
         self.randomPick = 4
         if (self.action_time == 0 and self.Time >= 120):
-          self.action_time = numpy.random.normal(loc=30, scale=15, size=None)
-          self.action_success_rate = 33        
+          self.action_time = self.climbingTime
+          self.action_success_rate = 33   
+
     #Robot skill level 5
     elif self.skillRating == 5:   
       if self.randomPick == 0:
@@ -100,8 +102,9 @@ class Robots:
       elif self.randomPick == 4:
         self.randomPick = 4
         if (self.action_time == 0 and self.Time >= 120):
-          self.action_time = numpy.random.normal(loc=27, scale=12.5, size=None)
-          self.action_success_rate = 40        
+          self.action_time = self.climbingTime
+          self.action_success_rate = 40    
+
     #Robot skill level 6
     elif self.skillRating == 6:   
       if self.randomPick == 0:
@@ -122,9 +125,10 @@ class Robots:
         self.action_success_rate = 77
       elif self.randomPick == 4:
         self.randomPick = 4
-        if (self.action_time == 0 and self.Time >= 120):
-          self.action_time = numpy.random.normal(loc=24, scale=10, size=None)
-          self.action_success_rate = 66        
+        if (self.Time >= 120):
+          self.action_time = self.climbingTime
+          self.action_success_rate = 66     
+
     #Robot skill level 7
     elif self.skillRating == 7:   
       if self.randomPick == 0:
@@ -146,10 +150,11 @@ class Robots:
       elif self.randomPick == 4:
         self.randomPick = 4
         if (self.action_time == 0 and self.Time >= 120):
-          self.action_time = numpy.random.normal(loc=18, scale=7.5, size=None)
-          self.action_success_rate = 78          
+          self.action_time = self.climbingTime
+          self.action_success_rate = 78   
+
     #Robot skill level 8
-    elif self.skillRating == 8:   
+    elif self.skillRating == 8:
       if self.randomPick == 0:
         self.randomPick = 0
         self.action_time = int(numpy.random.normal(loc=10, scale=3, size=None))
@@ -169,10 +174,11 @@ class Robots:
       elif self.randomPick == 4:
         self.randomPick = 4
         if (self.action_time == 0 and self.Time >= 120):
-          self.action_time = numpy.random.normal(loc=13, scale=5, size=None)
-          self.action_success_rate = 85        
+          self.action_time = self.climbingTime
+          self.action_success_rate = 85  
+
     #Robot skill level 9
-    elif self.skillRating == 9:   
+    elif self.skillRating == 9:
       if self.randomPick == 0:
         self.randomPick = 0
         self.action_time = int(numpy.random.normal(loc=7.5, scale=2, size=None))
@@ -192,10 +198,11 @@ class Robots:
       elif self.randomPick == 4:
         self.randomPick = 4
         if (self.action_time == 0 and self.Time >= 120):
-          self.action_time = numpy.random.normal(loc=7, scale=3, size=None)
+          self.action_time = self.climbingTime
           self.action_success_rate = 90  
+
     #Robot skill level 10
-    elif self.skillRating == 10:   
+    elif self.skillRating == 10:
       if self.randomPick == 0:
         self.randomPick = 0
         self.action_time = int(numpy.random.normal(loc=5, scale=2, size=None))
@@ -214,8 +221,8 @@ class Robots:
         self.action_success_rate = 98
       elif self.randomPick == 4:
         self.randomPick = 4
-        if (self.action_time == 0 and self.Time >= 120):
-          self.action_time = numpy.random.normal(loc=4, scale=2, size=None)
+        if (self.Time >= 120):
+          self.action_time = self.climbingTime
           self.action_success_rate = 95
   
   def do_action(self):
@@ -235,6 +242,37 @@ class Robots:
     elif self.randomPick == 3:
       self.field.add_scale_cube(self.is_red_alliance)
 
+  def get_endgame(self, skillRating):
+    #Skills 1-3 must do parking only
+    if skillRating == 1:
+      self.parkingTime = numpy.random.normal(loc=20, scale=10, size=None)  
+    elif skillRating == 2:
+      self.parkingTime = numpy.random.normal(loc=15, scale=7.5, size=None)
+    elif skillRating == 3:
+      self.parkingTime = numpy.random.normal(loc=13, scale=7.5, size=None)
+    #Skills 4-10 can climb, can resort to immediate parking
+    elif skillRating == 4:  
+      self.climbing_time = numpy.random.normal(loc=30, scale=15, size=None)
+      if (self.climbingTime > 30):
+        self.climbingTime = 30
+    elif skillRating == 5:
+      self.climbingTime = int(numpy.random.normal(loc=27, scale=12.5, size=None))
+      if (self.climbingTime > 30):
+        self.climbingTime = 30
+    elif skillRating == 6:
+      self.climbingTime = int(numpy.random.normal(loc=24, scale=10, size=None))
+      if (self.climbingTime > 30):
+        self.climbingTime = 30
+    elif skillRating == 7:
+      self.climbingTime = int(numpy.random.normal(loc=18, scale=7.5, size=None))
+    elif skillRating == 8: 
+      self.climbingTime = int(numpy.random.normal(loc=13, scale=5, size=None))  
+    elif skillRating == 9: 
+      self.climbingTime = int(numpy.random.normal(loc=7, scale=3, size=None))
+    elif skillRating == 10:
+      self.climbingTime = int(numpy.random.normal(loc=4, scale=2, size=None)) 
+#C:\Program Files (x86)\Python36-32
+#variables  *make sure to add stuff for powerups*
 
 
 # #Robot Function
