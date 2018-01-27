@@ -1,45 +1,15 @@
 from Field import Field
 
-# global switch
-# global switchAuto
-# global switchChance
-# global switchCubes
-
-# global vault
-# global vaultAuto
-# global vaultChance
-# global vaultCubes
-
-# global scale1
-# global scale1Auto
-# global scaleChance
-# global scaleCubes
-
-# global climbing
-# global climbingChance
-# global climbedRobots
-
-# global parking
-# global parkingChance
-# global parkedRobots
-
-# global Time
-# global blue
-# global bluePoints
-# global redPoints
-# global red
-
 
 Field = Field()
 
 for Time in range(0,150,1):
   if Time <=15:
     ##add in auto points
-    print("Auto")
+   Field.auto_tick(Time)
   elif Time >= 120:
-    print("Endgame")
+    Field.endgame_tick(Time)
   else:
-    ##add in regular points
     Field.tick(Time)
 
 

@@ -9,9 +9,11 @@ class Alliance():
         self.is_red_alliance = is_red_alliance
         self.field = field
         self.make_alliance(3)
+        self.parked = 0
+        self.climbed = 0
 
     def get_random_skill(self):
-        return random.randint(0, 3)
+        return random.randint(1, 10)
 
     def make_robot(self, num):
         prefix = "B"
@@ -23,7 +25,7 @@ class Alliance():
     def make_alliance(self, num_robots):
         for i in range(1, num_robots + 1, 1):
             self.make_robot(i)
-
+ 
     
     
 
