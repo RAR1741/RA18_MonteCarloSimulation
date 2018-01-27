@@ -38,12 +38,6 @@ class Field:
         print(f"Red Alliance Score : {self.red_alliance.points}")
         print(f"Blue Alliance Score : {self.blue_alliance.points}")
 
-    def endgame_tick(self, time):
-        self.time = time
-        print(f"Red Robots CLimbed|Blue Robots Climbed : {self.red_alliance.climbed} {self.blue_alliance.climbed}")
-        print(f"Red Robots Parked|BLue Robots Parked : {self.red_alliance.parked} {self.blue_alliance.parked}")
-        self.endgame_points()
-
     def auto_tick(self, time):
         self.time = time
         self.auto_my_switch_points()
@@ -51,7 +45,7 @@ class Field:
         self.auto_scale_points()
         print(f"Red Alliance Score : {self.red_alliance.points}")
         print(f"Blue Alliance Score : {self.blue_alliance.points}")
-        #need to ad in platform for auto
+        #need to add in platform for auto
 
 
 
@@ -78,6 +72,8 @@ class Field:
         self.scale.add_scale_cube(is_red_alliance)         
     
     def checkIfWin(self):
+        print(f"Red Alliance Score : {self.red_alliance.points}")
+        print(f"Blue Alliance Score : {self.blue_alliance.points}")
         if self.red_alliance.points > self.blue_alliance.points:
             print(f"The Red Alliance won!")
         elif self.blue_alliance.points > self.red_alliance.points:
@@ -103,12 +99,19 @@ class Field:
         elif self.scale.blue_cubes1 > self.scale.red_cubes1:
             self.blue_alliance.points += 1
     
-    def endgame_points(self):
-        #create loops for allliance add 30 of 5 depending on what is true
-        for alliance in self.alliances:
-            for x in range(0,2,1):
-                self.red_alliance.points += (self.red_alliance.robots[x].climb * 30) + (self.red_alliance.robots[x].platform * 5)
-                self.blue_alliance.points += (self.blue_alliance.robots[x].climb * 30) + (self.blue_alliance.robots[x].platform * 5)
+    def endgame_scoring(self):
+        #create loops for alliance add 30 of 5 depending on what is true
+       for alliance in self.alliances:
+            for team in alliance:
+                print(f"{team.name} {team.climb} {team.platform}")
+                if team.climb == True and team.is_red_alliance:
+                    self.red_alliance.points += 30
+                elif team.climb == True and team.is_red_alliance == False:
+                    self.blue_alliance.points += 30
+                elif team.platform == True and team.is_red_alliance:
+                    self.red_alliance.points += 5
+                elif team.platform == True and team.is_red_alliance == False:
+                    self.blue_alliance.points += 5
 
     def auto_my_switch_points(self):
         if self.my_switch.red_cubes > self.my_switch.blue_cubes:
@@ -127,6 +130,3 @@ class Field:
             self.red_alliance.points += 2
         elif self.scale.blue_cubes1 > self.scale.red_cubes1:
             self.blue_alliance.points += 2
-
-
-    
