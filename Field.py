@@ -40,12 +40,20 @@ class Field:
 
     def auto_tick(self, time):
         self.time = time
+        for alliance in self.alliances:
+            for team in alliance:
+                team.tick(time)
         self.auto_my_switch_points()
         self.auto_their_switch_points()
         self.auto_scale_points()
-        print(f"Red Alliance Score : {self.red_alliance.points}")
-        print(f"Blue Alliance Score : {self.blue_alliance.points}")
-        #need to add in platform for auto
+        print(f"Red Auto Score| Blue Score : {self.red_alliance.points} {self.blue_alliance.points}")
+    #     self.time = time
+    #     self.auto_my_switch_points()
+    #     self.auto_their_switch_points()
+    #     self.auto_scale_points()
+    #     print(f"Red Alliance Score : {self.red_alliance.points}")
+    #     print(f"Blue Alliance Score : {self.blue_alliance.points}")
+    #     #need to add in platform for auto
 
 
 
