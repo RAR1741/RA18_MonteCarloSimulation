@@ -37,6 +37,8 @@ class Field:
         self.scale_points()
         print(f"Red Alliance Score : {self.red_alliance.points}")
         print(f"Blue Alliance Score : {self.blue_alliance.points}")
+        self.red_vault.tick(time)
+        self.blue_vault.tick(time)
 
     def auto_tick(self, time):
         self.time = time
@@ -46,7 +48,6 @@ class Field:
         self.auto_my_switch_points()
         self.auto_their_switch_points()
         self.auto_scale_points()
-        print(f"Red Auto Score| Blue Score : {self.red_alliance.points} {self.blue_alliance.points}")
     #     self.time = time
     #     self.auto_my_switch_points()
     #     self.auto_their_switch_points()
@@ -91,36 +92,68 @@ class Field:
         
     def my_switch_points(self):
         if self.my_switch.red_cubes > self.my_switch.blue_cubes:
-            self.red_alliance.points += 1
-        elif self.my_switch.blue_cubes > self.my_switch.red_cubes:
-            self.blue_alliance.points += 1
+            if self.red_vault.boost and (self.red_vault.boost_cubes == 1 or self.red_vault.boost_cubes == 3):
+                self.red_alliance.points += 2
+            else:
+                self.red_alliance.points += 1
+        elif self.red_vault.force and (self.red_vault.force_cubes == 1 or self.red_vault.force_cubes == 3):
+                self.red_alliance.points += 1        
 
     def their_switch_points(self):
-        if self.their_switch.red_cubes > self.their_switch.blue_cubes:
-            self.red_alliance.points += 1
-        elif self.their_switch.blue_cubes > self.their_switch.red_cubes:
-            self.blue_alliance.points += 1
+        if self.their_switch.blue_cubes > self.their_switch.red_cubes:
+            if self.blue_vault.boost and (self.blue_vault.boost_cubes == 1 or self.blue_vault.boost_cubes == 3):
+                self.blue_alliance.points += 2
+            else:
+                self.blue_alliance.points += 1
+        elif self.blue_vault.force and (self.blue_vault.force_cubes == 1 or self.blue_vault.force_cubes == 3):
+            self.blue_alliance.points += 1 
     
     def scale_points(self):
-        if self.scale.red_cubes1 > self.scale.blue_cubes1:
+        if self.red_vault.force and (self.red_vault.force_cubes == 2 and self.red_vault.force_cubes == 3):
             self.red_alliance.points += 1
-        elif self.scale.blue_cubes1 > self.scale.red_cubes1:
+        elif self.blue_vault.force and (self.blue_vault.force_cubes == 2 and self.blue_vault.force_cubes == 3):
             self.blue_alliance.points += 1
-    
+        elif self.scale.red_cubes1 > self.scale.blue_cubes1:
+            if self.red_vault.boost and (self.red_vault.boost_cubes == 2 and self.red_vault.boost_cubes == 3):
+                self.red_alliance.points += 2
+            else:
+                self.red_alliance.points += 1
+        elif self.scale.blue_cubes1 > self.scale.red_cubes1:
+            if self.blue_vault.boost and (self.blue_vault.boost_cubes == 2 and self.blue_vault.boost_cubes == 3):
+                self.blue_alliance.points += 1
+            else:
+                self.red_alliance.points += 1
+        
     def endgame_scoring(self):
-        #create loops for alliance add 30 of 5 depending on what is true
-       for alliance in self.alliances:
+        red_park_counter = 0
+        red_climb_counter = 0
+        blue_park_counter = 0
+        blue_climb_counter = 0
+        for alliance in self.alliances:
             for team in alliance:
                 print(f"{team.name} {team.climb} {team.platform}")
                 if team.climb == True and team.is_red_alliance:
                     self.red_alliance.points += 30
+                    red_climb_counter += 1
                 elif team.climb == True and team.is_red_alliance == False:
                     self.blue_alliance.points += 30
+                    blue_climb_counter += 1
                 elif team.platform == True and team.is_red_alliance:
                     self.red_alliance.points += 5
+                    red_park_counter += 1
                 elif team.platform == True and team.is_red_alliance == False:
                     self.blue_alliance.points += 5
-
+                    blue_park_counter += 1
+        if self.red_vault.lev and red_climb_counter < 3:
+            if red_climb_counter + red_park_counter < 3:
+                self.red_alliance.points += 30
+            else:
+                self.red_alliance.points += 25
+        elif self.blue_vault.lev and blue_climb_counter < 3:
+            if blue_climb_counter + blue_park_counter < 3:
+                self.blue_alliance.points += 30
+            else:
+                self.blue_alliance.points += 25
     def auto_my_switch_points(self):
         if self.my_switch.red_cubes > self.my_switch.blue_cubes:
             self.red_alliance.points += 2
@@ -138,3 +171,5 @@ class Field:
             self.red_alliance.points += 2
         elif self.scale.blue_cubes1 > self.scale.red_cubes1:
             self.blue_alliance.points += 2
+
+    
