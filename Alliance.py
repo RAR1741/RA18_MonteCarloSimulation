@@ -1,6 +1,7 @@
 from Robots import Robots
 from Switch import Switch
 from Scale import Scale
+from Vault import Vault
 import random
 class Alliance():
     def __init__(self, field, is_red_alliance):
@@ -9,9 +10,11 @@ class Alliance():
         self.is_red_alliance = is_red_alliance
         self.field = field
         self.make_alliance(3)
+        self.parked = 0
+        self.climbed = 0
 
     def get_random_skill(self):
-        return random.randint(0, 3)
+        return random.randint(1, 10)
 
     def make_robot(self, num):
         prefix = "B"
@@ -24,6 +27,15 @@ class Alliance():
         for i in range(1, num_robots + 1, 1):
             self.make_robot(i)
 
+    # add in a queuing to track powerup alliances
+    def queue(self, power_active, is_red_alliance):
+        if self.is_red_alliance and power_active:
+            self.can_use_power = False
+        elif self.is_red_alliance == False and power_active:
+            self.can_use_power = False
+
+
+ 
     
     
 

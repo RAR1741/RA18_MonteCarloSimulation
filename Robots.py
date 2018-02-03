@@ -9,24 +9,46 @@ class Robots:
     self.name = name
     self.skillRating = skillRating
     self.get_endgame(skillRating)
+  
 
     self.action_time = 0
     self.action_success_rate = 0
     self.randomPick = 0
+    self.climbing_time = 0
+    self.did_endgame = False
+    self.climb = False
+    self.platform = False
+    self.auto_run = False
+    self.can_auto = True
   
   def tick(self, time):
+    print(f"Time({self.name}):{self.action_time}:{self.randomPick}")
     self.action_time -= 1
-    print(f"Time({self.name}): {self.action_time}")
-
     if self.action_time <= 1:
       if self.action_success_rate >= random.randint(1,100):
-        self.do_action()
-      self.get_new_action()
+          self.do_action()
+      if time < 15:
+        self.baseline()
+        self.get_new_action()
+      elif time <120:
+        self.get_new_action()
+      else:
+        self.action_time = 0
+        self.climbing_time -= 1
+        if self.climbing_time <= 1 and self.did_endgame == False:
+          self.did_endgame = True
+          if self.climbing_success_rate >= random.randint(1,100):
+            self.climb = True
+          else:
+            self.platform = True
+
+          
 
   def get_new_action(self):
-    self.randomPick = random.randint(0,3)
+    self.randomPick = random.randint(1,4)
 
-
+    
+   
 
     # Robot Skill Level 1
     if self.skillRating == 1:
@@ -75,11 +97,11 @@ class Robots:
         self.randomPick = 2
         self.action_time = int(numpy.random.normal(loc=35, scale=15, size=None))
         self.action_success_rate = 66
-      elif self.randomPick == 4:
-        self.randomPick = 4
-        if (self.action_time == 0 and self.Time >= 120):
-          self.action_time = self.climbingTime
-          self.action_success_rate = 33   
+      # elif self.randomPick == 4:
+      #   self.randomPick = 4
+      #   if self.field.time >= 120:
+      #     self.action_time = self.action_time
+      #     self.action_success_rate = 33   
 
     #Robot skill level 5
     elif self.skillRating == 5:   
@@ -99,11 +121,11 @@ class Robots:
         self.randomPick = 3
         self.action_time = int(numpy.random.normal(loc=30, scale=12.5, size=None))
         self.action_success_rate = 72
-      elif self.randomPick == 4:
-        self.randomPick = 4
-        if (self.action_time == 0 and self.Time >= 120):
-          self.action_time = self.climbingTime
-          self.action_success_rate = 40    
+      # elif self.randomPick == 4:
+      #   self.randomPick = 4
+      #   if self.field.time >= 120:
+      #     self.action_time = self.action_time
+      #     self.action_success_rate = 40    
 
     #Robot skill level 6
     elif self.skillRating == 6:   
@@ -123,11 +145,11 @@ class Robots:
         self.randomPick = 3
         self.action_time = int(numpy.random.normal(loc=25, scale=10, size=None))
         self.action_success_rate = 77
-      elif self.randomPick == 4:
-        self.randomPick = 4
-        if (self.Time >= 120):
-          self.action_time = self.climbingTime
-          self.action_success_rate = 66     
+      # elif self.randomPick == 4:
+      #   self.randomPick = 4
+      #   if (self.field.time >= 120):
+      #     self.action_time = self.action_time
+      #     self.action_success_rate = 66     
 
     #Robot skill level 7
     elif self.skillRating == 7:   
@@ -147,11 +169,11 @@ class Robots:
         self.randomPick = 3
         self.action_time = int(numpy.random.normal(loc=20, scale=7.5, size=None))
         self.action_success_rate = 85  
-      elif self.randomPick == 4:
-        self.randomPick = 4
-        if (self.action_time == 0 and self.Time >= 120):
-          self.action_time = self.climbingTime
-          self.action_success_rate = 78   
+      # elif self.randomPick == 4:
+      #   self.randomPick = 4
+      #   if self.field.time >= 120:
+      #     self.action_time = self.action_time
+      #     self.action_success_rate = 78   
 
     #Robot skill level 8
     elif self.skillRating == 8:
@@ -171,11 +193,11 @@ class Robots:
         self.randomPick = 3
         self.action_time = int(numpy.random.normal(loc=15, scale=5, size=None))
         self.action_success_rate = 90
-      elif self.randomPick == 4:
-        self.randomPick = 4
-        if (self.action_time == 0 and self.Time >= 120):
-          self.action_time = self.climbingTime
-          self.action_success_rate = 85  
+      # elif self.randomPick == 4:
+      #   self.randomPick = 4
+      #   if self.field.time >= 120:
+      #     self.action_time = self.action_time
+      #     self.action_success_rate = 85  
 
     #Robot skill level 9
     elif self.skillRating == 9:
@@ -195,11 +217,11 @@ class Robots:
         self.randomPick = 3
         self.action_time = int(numpy.random.normal(loc=12.5, scale=4, size=None))
         self.action_success_rate = 95
-      elif self.randomPick == 4:
-        self.randomPick = 4
-        if (self.action_time == 0 and self.Time >= 120):
-          self.action_time = self.climbingTime
-          self.action_success_rate = 90  
+      # elif self.randomPick == 4:
+      #   self.randomPick = 4
+      #   if self.field.time >= 120:
+      #     self.action_time = self.action_time
+      #     self.action_success_rate = 90  
 
     #Robot skill level 10
     elif self.skillRating == 10:
@@ -219,11 +241,11 @@ class Robots:
         self.randomPick = 3
         self.action_time = int(numpy.random.normal(loc=10, scale=3, size=None))
         self.action_success_rate = 98
-      elif self.randomPick == 4:
-        self.randomPick = 4
-        if (self.Time >= 120):
-          self.action_time = self.climbingTime
-          self.action_success_rate = 95
+      # elif self.randomPick == 4:
+      #   self.randomPick = 4
+        # if (self.field.time >= 120):
+        #   self.action_time = self.action_time
+        #   self.action_success_rate = 95
   
   def do_action(self):
     # Vault
@@ -245,364 +267,45 @@ class Robots:
   def get_endgame(self, skillRating):
     #Skills 1-3 must do parking only
     if skillRating == 1:
-      self.parkingTime = numpy.random.normal(loc=20, scale=10, size=None)  
+      self.climbing_time = numpy.random.normal(loc=20, scale=10, size=None) 
+      self.climbing_success_rate = 0 
     elif skillRating == 2:
-      self.parkingTime = numpy.random.normal(loc=15, scale=7.5, size=None)
+      self.climbing_time = numpy.random.normal(loc=15, scale=7.5, size=None)
+      self.climbing_success_rate = 0
     elif skillRating == 3:
-      self.parkingTime = numpy.random.normal(loc=13, scale=7.5, size=None)
+      self.climbing_time = numpy.random.normal(loc=13, scale=7.5, size=None)
+      self.climbing_success_rate = 0
     #Skills 4-10 can climb, can resort to immediate parking
     elif skillRating == 4:  
       self.climbing_time = numpy.random.normal(loc=30, scale=15, size=None)
-      if (self.climbingTime > 30):
-        self.climbingTime = 30
+      self.climbing_success_rate = 33 
+      if self.climbing_time > 30:
+        self.climbing_time = 30
     elif skillRating == 5:
-      self.climbingTime = int(numpy.random.normal(loc=27, scale=12.5, size=None))
-      if (self.climbingTime > 30):
-        self.climbingTime = 30
+      self.climbing_time = int(numpy.random.normal(loc=27, scale=12.5, size=None))
+      self.climbing_success_rate = 40
+      if self.climbing_time > 30:
+        self.climbing_time = 30
     elif skillRating == 6:
-      self.climbingTime = int(numpy.random.normal(loc=24, scale=10, size=None))
-      if (self.climbingTime > 30):
-        self.climbingTime = 30
+      self.climbing_time = int(numpy.random.normal(loc=24, scale=10, size=None))
+      self.climbing_success_rate = 66 
+      if self.climbing_time > 30:
+        self.climbing_time = 30
     elif skillRating == 7:
-      self.climbingTime = int(numpy.random.normal(loc=18, scale=7.5, size=None))
+      self.climbing_time = int(numpy.random.normal(loc=18, scale=7.5, size=None))
+      self.climbing_success_rate = 78  
     elif skillRating == 8: 
-      self.climbingTime = int(numpy.random.normal(loc=13, scale=5, size=None))  
+      self.climbing_time = int(numpy.random.normal(loc=13, scale=5, size=None))
+      self.climbing_success_rate = 85  
     elif skillRating == 9: 
-      self.climbingTime = int(numpy.random.normal(loc=7, scale=3, size=None))
+      self.climbing_time = int(numpy.random.normal(loc=7, scale=3, size=None))
+      self.climbing_success_rate = 90  
     elif skillRating == 10:
-      self.climbingTime = int(numpy.random.normal(loc=4, scale=2, size=None)) 
-#C:\Program Files (x86)\Python36-32
-#variables  *make sure to add stuff for powerups*
-
-
-# #Robot Function
-# def RobotAbility(RobotSkill):
-#   if(RobotSkill == 1):
-#     vault = True
-#     if(randomPick == 0 or randomPick == 1 or randomPick == 2):
-#       vaultTime = numpy.random.normal(loc=45, scale=15, size=None)
-#       vaultSuccess = random.randint(0,100)
-#       if(vault == True and vaultSuccess <= 80): #can score in the vault
-#         while(vaultCubes < 9):
-#           if(Time % vaultTime == 0):
-#             vaultCubes += 1
-#             vaultTime = numpy.random.normal(loc=45, scale=15, size=None)
-    
-#     scale1 = False    
-#     switch = False
-#     climbing = False
-#     parking = True
-#     if(parking == True and parkingSuccess <=85):
-#       parkedRobots += 1
-#       parkingTime = numpy.random.normal(loc=20, scale=10, size=None)  
-
-
+      self.climbing_time = int(numpy.random.normal(loc=4, scale=2, size=None)) 
+      self.climbing_success_rate = 95
   
-#   elif(RobotSkill == 2):
-#     vault = True
-#     if(randomPick == 0 or randomPick == 1 or randomPick == 2):
-#       vaultTime = numpy.random.normal(loc=35, scale=12.5, size=None)
-#       vaultSuccess = random.randint(0,100)
-#       if(vault == True and vaultSuccess <=83):
-#         while(vaultCubes < 9):
-#           if(Time % vaultTime == 0):
-#             vaultCubes += 1
-#             vaultTime = numpy.random.normal(loc=35, scale=12.5, size=None)
-      
-#     scale1 = False    
-#     switch = False
-#     climbing = False
-#     parking = True
-#     if(parking == True and parkingSuccess <=89):
-#       parkedRobots += 1
-#       parkingTime = numpy.random.normal(loc=15, scale=7.5, size=None) 
-    
-  
-  
-#   elif(RobotSkill == 3):
-#     vault = True
-#     if(randomPick == 0 or randomPick == 1 or randomPick == 2):
-#       vaultTime = numpy.random.normal(loc=30, scale=10, size=None)
-#       vaultSuccess = random.randint(0,100)
-#       if(vault == True and vaultSuccess <=85):
-#          while(vaultCubes < 9):
-#           if(Time % vaultTime == 0):
-#             vaultCubes += 1
-#             vaultTime = numpy.random.normal(loc=30, scale=10, size=None)
-    
-#       switch = True
-#       switchTime = numpy.random.normal(loc=30, scale=15, size=None)
-#       if(switch == True and switchSuccess <=66):
-#         switchCubes += 1
-#         switchTime = numpy.random.normal(loc=30, scale=15, size=None)
-    
-#     scale1 = False
-#     climbing = False
-#     parking = True
-#     if(parking == True and parkingSuccess <=92):
-#       parkedRobots += 1
-#       parkingTime = numpy.random.normal(loc=13, scale=7.5, size=None) 
-  
-  
-  
-#   elif(RobotSkill == 4):
-#     vault = True
-#     scale1 = True
-#     switch = True
-#     if(randomPick == 0):
-#       vaultTime = numpy.random.normal(loc=25, scale=8, size=None)
-#       vaultSuccess = random.randint(0,100)
-#       if(vault == True and vaultSuccess <=86):
-#         while(vaultCubes < 9):
-#           if(Time % vaultTime == 0):
-#             vaultCubes += 1
-#             vaultTime = numpy.random.normal(loc=25, scale=8, size=None)
-  
-#     if(randomPick == 1):
-#       scaleTime = numpy.random.normal(loc=35, scale=15, size=None)
-#       scaleSuccess = random.randint(0,100)
-#       if (scale1 == True and scaleSuccess <=66):
-#         scaleCubes += 1
-#         scaleTime = numpy.random.normal(loc=35, scale=15, size=None)
-  
-    
-#     if(randomPick == 2):
-#       if(switch == True and switchSuccess <=73):
-#         switchCubes += 1
-#         switchTime = numpy.random.normal(loc=25, scale=10, size=None)
-
-#     climbing = True
-#     if(climbing == True and climbingSuccess <=33):
-#       climbedRobots += 1
-#       climbingTime = numpy.random.normal(loc=30, scale=15, size=None)
-#     elif(parking == True and parkingSuccess <=94):
-#       parkedRobots += 1
-#       parkingTime = numpy.random.normal(loc=10, scale=5, size=None)  
-    
-    
-    
-#   elif (RobotSkill == 5):
-#     vault = True
-#     scale1 = True
-#     switch = True
-#     if(randomPick == 0):
-#       vaultTime = numpy.random.normal(loc=20, scale=6, size=None)
-#       vaultSuccess = random.randint(0,100)
-#       if(vault == True and vaultSuccess <=89):
-#         while(vaultCubes < 9):
-#           if(Time % vaultTime == 0):
-#             vaultCubes += 1
-#             vaultTime = numpy.random.normal(loc=20, scale=6, size=None)
-      
-#     if(randomPick == 1):
-#       scaleTime = numpy.random.normal(loc=30, scale=12.5, size=None)
-#       scaleSuccess = random.randint(0,100)
-#       if (scale1 == True and scaleSuccess <=72):
-#         scaleCubes += 1
-#         scaleTime = numpy.random.normal(loc=30, scale=12.5, size=None)
-    
-#     if(randomPick == 2):
-#       switchTime = numpy.random.normal(loc=20, scale=10, size=None)
-#       if(switch == True and switchSuccess <=78):
-#         switchCubes += 1
-#         switchTime = numpy.random.normal(loc=25, scale=10, size=None)
-  
-#     climbing = True
-#     if(climbing == True and climbingSuccess <=40):
-#       climbedRobots += 1
-#       climbingTime = numpy.random.normal(loc=27, scale=12.5, size=None)
-#     elif(parking == True and parkingSuccess <=96):
-#       parkedRobots += 1
-#       parkingTime = numpy.random.normal(loc=8, scale=4, size=None)  
-    
-    
-  
-#   elif(RobotSkill == 6):
-#     vault = True
-#     scale1 = True
-#     switch = True
-#     if(randomPick == 0):
-#       vaultTime = numpy.random.normal(loc=15, scale=5, size=None)
-#       vaultSuccess = random.randint(0,100)
-#       if(vault == True and vaultSuccess <= 92):
-#         while(vaultCubes < 9):
-#           if(Time % vaultTime == 0):
-#             vaultCubes += 1
-#             vaultTime = numpy.random.normal(loc=15, scale=5, size=None)
-      
-#     if(randomPick == 1):
-#       scaleTime = numpy.random.normal(loc=25, scale=10, size=None)
-#       scaleSuccess = random.randint(0,100)
-#       if (scale1 == True and scaleSuccess <=77):
-#         scaleCubes += 1
-#         scaleTime = numpy.random.normal(loc=25, scale=10, size=None)
-  
-#     if(randomPick == 2):
-#       switchTime = numpy.random.normal(loc=15, scale=7.5, size=None)
-#       if(switch == True and switchSuccess <=85):
-#         switchCubes += 1
-#         switchTime = numpy.random.normal(loc=15, scale=7.5, size=None)
-
-#     climbing = True 
-#     if(climbing == True and climbingSuccess <=66):
-#       climbedRobots += 1
-#       climbingTime = numpy.random.normal(loc=24, scale=10, size=None)
-#     elif(parking == True and parkingSuccess <=97):
-#       parkedRobots += 1
-#       parkingTime = numpy.random.normal(loc=6, scale=3, size=None)
-  
-  
-  
-#   elif(RobotSkill == 7):
-#     vault = True
-#     scale1 = True
-#     switch = True
-#     if(randomPick == 0):
-#       vaultTime = numpy.random.normal(loc=12.5, scale=4, size=None)
-#       vaultSuccess = random.randint(0,100)
-#       if(vault == True and vaultSuccess <= 95):
-#         while(vaultCubes < 9):
-#           if(Time % vaultTime == 0):
-#             vaultCubes += 1
-#             vaultTime = numpy.random.normal(loc=12.5, scale=4, size=None)
-  
-#     if(randomPick == 1):
-#       scaleTime = numpy.random.normal(loc=20, scale=7.5, size=None)
-#       scaleSuccess = random.randint(0,100)
-#       if (scale1 == True and scaleSuccess <=85):
-#         scaleCubes += 1
-#         scaleTime = numpy.random.normal(loc=20, scale=7.5, size=None)
-  
-#     if(randomPick == 2):
-#       switchTime = numpy.random.normal(loc=12.5, scale=5, size=None)
-#       if(switch == True and switchSuccess <=88):
-#         switchCubes += 1
-#         switchTime = numpy.random.normal(loc=12.5, scale=5, size=None)
-    
-#     climbing = True
-#     if(climbing == True and climbingSuccess <=78):
-#       climbedRobots += 1
-#       climbingTime = numpy.random.normal(loc=18, scale=7.5, size=None)
-#     elif(parking == True and parkingSuccess <=98):
-#       parkedRobots += 1
-#       parkingTime = numpy.random.normal(loc=5, scale=3, size=None)
-  
-    
-    
-#   elif(RobotSkill == 8):
-#     vault = True
-#     scale1 = True
-#     switch = True
-#     if(randomPick == 0):
-#       vaultTime = numpy.random.normal(loc=10, scale=3, size=None)
-#       vaultSuccess = random.randint(0,100)
-#       if(vault == True and vaultSuccess <= 97):
-#         while(vaultCubes < 9):
-#           if(Time % vaultTime == 0):
-#             vaultCubes += 1
-#             vaultTime = numpy.random.normal(loc=10, scale=3, size=None)
-  
-#     if(randomPick == 1):
-#       scaleTime = numpy.random.normal(loc=15, scale=5, size=None)
-#       scaleSuccess = random.randint(0,100)
-#       if (scale1 == True and scaleSuccess <=90):
-#         scaleCubes += 1
-#         scaleTime = numpy.random.normal(loc=15, scale=5, size=None)
-    
-#     if(randomPick == 2):
-#       switchTime = numpy.random.normal(loc=10, scale=4.5, size=None)
-#       if(switch == True and switchSuccess <=90):
-#         switchCubes += 1
-#         switchTime = numpy.random.normal(loc=10, scale=4.5, size=None)
-    
-#     climbing = True   
-#     if(climbing == True and climbingSuccess <=85):
-#       climbedRobots += 1
-#       climbingTime = numpy.random.normal(loc=13, scale=5, size=None)
-#     elif(parking == True and parkingSuccess <=99):
-#       parkedRobots += 1
-#       parkingTime = numpy.random.normal(loc=4, scale=2, size=None)
-    
-    
-    
-#   elif(RobotSkill == 9):
-#     vault = True
-#     climbing = True
-#     scale1 = True
-#     switch = True
-#     if(randomPick == 0):
-#       vaultTime = numpy.random.normal(loc=7.5, scale=2, size=None)
-#       vaultSuccess = random.randint(0,100)
-#       if(vault == True and vaultSuccess <= 97):
-#         while(vaultCubes < 9):
-#           if(Time % vaultTime == 0):
-#             vaultCubes += 1
-#             vaultTime = numpy.random.normal(loc=7.5, scale=2, size=None)
-  
-#     if(randomPick == 1):
-#       scaleTime = numpy.random.normal(loc=12.5, scale=4, size=None)
-#       scaleSuccess = random.randint(0,100)
-#       if (scale1 == True and scaleSuccess <=95):
-#         scaleCubes += 1
-#         scaleTime = numpy.random.normal(loc=12.5, scale=4, size=None)
-    
-#     if(randomPick == 2):
-#       switchTime = numpy.random.normal(loc=8.75, scale=2.5, size=None)
-#       if(switch == True and switchSuccess <=95):
-#         switchCubes += 1
-#         switchTime = numpy.random.normal(loc=8.75, scale=2.5, size=None)
-
-    
-#     if(climbing == True and climbingSuccess <=90):
-#       climbedRobots += 1
-#       climbingTime = numpy.random.normal(loc=7, scale=3, size=None)
-#     elif(parking == True and parkingSuccess <=99):
-#       parkedRobots += 1
-#       parkingTime = numpy.random.normal(loc=3, scale=1.5, size=None)
-
-
-
-#   elif(RobotSkill == 10):
-#     vault = True
-#     climbing = True
-#     scale1 = True
-#     switch = True
-#     if(randomPick == 0):
-#       vaultTime = numpy.random.normal(loc=5, scale=2, size=None)
-#       vaultSuccess = random.randint(0,100)
-#       if(vault == True and vaultSuccess <= 99):
-#         while(vaultCubes < 9):
-#           if(Time % vaultTime == 0):
-#             vaultCubes += 1
-#             vaultTime = numpy.random.normal(loc=5, scale=2, size=None)
-  
-#     if(randomPick == 1):
-#       scaleTime = numpy.random.normal(loc=10, scale=3, size=None)
-#       scaleSuccess = random.randint(0,100)
-#       if (scale1 == True and scaleSuccess <=98):
-#         scaleCubes += 1
-#         scaleTime = numpy.random.normal(loc=10, scale=3, size=None)
-    
-#     if(randomPick == 2): 
-#       switchTime = numpy.random.normal(loc=7, scale=2, size=None)
-#       if(switch == True and switchSuccess <=99):
-#         switchCubes += 1
-#         switchTime = numpy.random.normal(loc=7, scale=2, size=None)
-
-    
-#     if(climbing == True and climbingSuccess <=95):
-#       climbedRobots += 1
-#       climbingTime = numpy.random.normal(loc=4, scale=2, size=None)
-#     elif(parking == True and parkingSuccess <=99):
-#       parkedRobots += 1
-#       parkingTime = numpy.random.normal(loc=2, scale=1, size=None)
-    
-
-
-#   else:
-#     print("The points were not cubes registered")
-#     if(climbing == False and """add in charactersitics it needs to pass for climbing to succeed"""):
-#       if(Time % vaultTime == 0):
-#         """add points to the specific alliance"""
-#     else:
-#       print("Your Robot's skill is off the charts")
+  def baseline(self):
+    self.auto_success = random.randint(1,100)
+    if self.auto_success < 85 and self.can_auto == True:
+      self.auto_run = True
+      self.can_auto == False      
