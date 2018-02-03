@@ -10,3 +10,4 @@ for Time in range(0,150,1):
     Field.tick(Time)
 Field.endgame_scoring()
 Field.checkIfWin()
+Field.baseline_points()

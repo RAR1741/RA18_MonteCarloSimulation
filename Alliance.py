@@ -28,7 +28,11 @@ class Alliance():
             self.make_robot(i)
 
     # add in a queuing to track powerup alliances
-    def queue(self, power_active):
+    def queue(self, power_active, is_red_alliance):
+        if self.is_red_alliance and power_active:
+            self.can_use_power = False
+        elif self.is_red_alliance == False and power_active:
+            self.can_use_power = False
 
 
  

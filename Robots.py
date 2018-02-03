@@ -18,6 +18,8 @@ class Robots:
     self.did_endgame = False
     self.climb = False
     self.platform = False
+    self.auto_run = False
+    self.can_auto = True
   
   def tick(self, time):
     print(f"Time({self.name}):{self.action_time}:{self.randomPick}")
@@ -25,7 +27,10 @@ class Robots:
     if self.action_time <= 1:
       if self.action_success_rate >= random.randint(1,100):
           self.do_action()
-      if time <120:
+      if time < 15:
+        self.baseline()
+        self.get_new_action()
+      elif time <120:
         self.get_new_action()
       else:
         self.action_time = 0
@@ -298,4 +303,9 @@ class Robots:
     elif skillRating == 10:
       self.climbing_time = int(numpy.random.normal(loc=4, scale=2, size=None)) 
       self.climbing_success_rate = 95
-      
+  
+  def baseline(self):
+    self.auto_success = random.randint(1,100)
+    if self.auto_success < 85 and self.can_auto == True:
+      self.auto_run = True
+      self.can_auto == False      
