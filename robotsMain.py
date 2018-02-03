@@ -1,6 +1,6 @@
 from Field import Field
 
-for games in range(1, 5, 1):
+for games in range(1, 2, 1):
   field = Field()
   for Time in range(0,150,1):
     if Time <=15:

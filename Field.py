@@ -194,7 +194,3 @@ class Field:
         else:
             pass
 
-
-    
-   
-   
