@@ -6,6 +6,7 @@ from Scale import Scale
 from Switch import Switch
 from Alliance import Alliance
 from Points import Points
+from Output import Output
 
 
 class Field:
@@ -20,11 +21,22 @@ class Field:
         self.time = 0
         self.queue = []
 
-       
+        #output
+        self.output = Output()
+        self.red_own_switch_control = 0
+        self.red_opposite_switch_control = 0
+        self.blue_own_switch_control = 0
+        self.blue_opposite_switch_control = 0
+        self.red_scale_control = 0
+        self.blue_scale_control = 0
+
         # Robots
         self.red_alliance  = Alliance(self, True)#self.red_alliance.points to edits
         self.blue_alliance = Alliance(self, False)
         self.alliances = [self.blue_alliance.robots, self.red_alliance.robots]
+        self.set_output_skills()
+        self.time_controlled_output()
+    
     def tick(self, time):
         self.time = time
         print(f"Boost|Force|Lev : {self.red_vault.boost_cubes}|{self.red_vault.force_cubes}|{self.red_vault.lev_cubes}")
@@ -49,14 +61,7 @@ class Field:
         self.auto_my_switch_points()
         self.auto_their_switch_points()
         self.auto_scale_points()
-    #     self.time = time
-    #     self.auto_my_switch_points()
-    #     self.auto_their_switch_points()
-    #     self.auto_scale_points()
-    #     print(f"Red Alliance Score : {self.red_alliance.points}")
-    #     print(f"Blue Alliance Score : {self.blue_alliance.points}")
-    #     #need to add in platform for auto
-
+    
 
     def add_random_vault_cube(self, is_red_alliance):
         if is_red_alliance:
@@ -91,37 +96,52 @@ class Field:
         
     def my_switch_points(self):
         if self.my_switch.red_cubes > self.my_switch.blue_cubes:
+            self.red_own_switch_control += 1
             if self.red_vault.boost and (self.red_vault.boost_cubes == 1 or self.red_vault.boost_cubes == 3):
                 self.red_alliance.points += 2
             else:
                 self.red_alliance.points += 1
         elif self.red_vault.force and (self.red_vault.force_cubes == 1 or self.red_vault.force_cubes == 3):
-                self.red_alliance.points += 1        
+            self.red_own_switch_control += 1
+            self.red_alliance.points += 1
+        elif self.my_switch.blue_cubes > self.my_switch.red_cubes:
+            self.blue_opposite_switch_control += 1       
 
     def their_switch_points(self):
         if self.their_switch.blue_cubes > self.their_switch.red_cubes:
             if self.blue_vault.boost and (self.blue_vault.boost_cubes == 1 or self.blue_vault.boost_cubes == 3):
                 self.blue_alliance.points += 2
+                self.blue_own_switch_control += 1
             else:
                 self.blue_alliance.points += 1
+                self.blue_own_switch_control += 1
         elif self.blue_vault. force and (self.blue_vault.force_cubes == 1 or self.blue_vault.force_cubes == 3):
-            self.blue_alliance.points += 1 
+            self.blue_alliance.points += 1
+            self.blue_own_switch_control += 1
+        elif self.their_switch.red_cubes > self.their_switch.blue_cubes:
+            self.red_opposite_switch_control += 1
     
     def scale_points(self):
         if self.red_vault.force and (self.red_vault.force_cubes == 2 and self.red_vault.force_cubes == 3):
             self.red_alliance.points += 1
+            self.red_scale_control += 1
         elif self.blue_vault.force and (self.blue_vault.force_cubes == 2 and self.blue_vault.force_cubes == 3):
             self.blue_alliance.points += 1
+            self.blue_scale_control += 1
         elif self.scale.red_cubes1 > self.scale.blue_cubes1:
             if self.red_vault.boost and (self.red_vault.boost_cubes == 2 and self.red_vault.boost_cubes == 3):
                 self.red_alliance.points += 2
+                self.red_scale_control += 1
             else:
                 self.red_alliance.points += 1
+                self.red_scale_control += 1
         elif self.scale.blue_cubes1 > self.scale.red_cubes1:
             if self.blue_vault.boost and (self.blue_vault.boost_cubes == 2 and self.blue_vault.boost_cubes == 3):
                 self.blue_alliance.points += 1
+                self.blue_scale_control += 1
             else:
                 self.red_alliance.points += 1
+                self.blue_scale_control += 1
         
     def endgame_scoring(self):
         red_park_counter = 0
@@ -157,20 +177,26 @@ class Field:
     def auto_my_switch_points(self):
         if self.my_switch.red_cubes > self.my_switch.blue_cubes:
             self.red_alliance.points += 2
+            self.red_own_switch_control += 1
         elif self.my_switch.blue_cubes > self.my_switch.red_cubes:
             self.blue_alliance.points += 2
+            self.blue_opposite_switch_control += 1
 
     def auto_their_switch_points(self):
         if self.their_switch.red_cubes > self.their_switch.blue_cubes:
             self.red_alliance.points += 2
+            self.red_opposite_switch_control += 1
         elif self.their_switch.blue_cubes > self.their_switch.red_cubes:
             self.blue_alliance.points += 2
+            self.blue_own_switch_control += 1
 
     def auto_scale_points(self):
         if self.scale.red_cubes1 > self.scale.blue_cubes1:
             self.red_alliance.points += 2
+            self.red_scale_control += 1
         elif self.scale.blue_cubes1 > self.scale.red_cubes1:
             self.blue_alliance.points += 2
+            self.blue_scale_control += 1
 
     def baseline_points(self):
         for alliance in self.alliances:
@@ -194,7 +220,26 @@ class Field:
         else:
             pass
 
+    def set_output_skills(self):
+        self.output.red_one_skill = self.red_alliance.robots[0].skillRating
+        self.output.red_two_skill = self.red_alliance.robots[1].skillRating
+        self.output.red_three_skill = self.red_alliance.robots[2].skillRating
+        self.output.blue_one_skill = self.blue_alliance.robots[0].skillRating
+        self.output.blue_two_skill = self.blue_alliance.robots[1].skillRating
+        self.output.blue_three_skill = self.blue_alliance.robots[2].skillRating
 
-    
-   
-   
+    def time_controlled_output(self):
+        self.output.red_own_switch_control = self.red_own_switch_control
+        self.output.red_opposite_switch_control = self.red_opposite_switch_control
+        self.output.blue_own_switch_control = self.blue_own_switch_control
+        self.output.blue_opposite_switch_control = self.blue_opposite_switch_control
+        self.output.red_scale_control = self.red_scale_control
+        self.output.blue_scale_control = self.blue_scale_control
+
+
+
+        
+       
+       
+        
+        

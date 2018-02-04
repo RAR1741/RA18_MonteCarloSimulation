@@ -34,8 +34,6 @@ class Alliance():
         elif self.is_red_alliance == False and power_active:
             self.can_use_power = False
 
-
- 
     
     
 

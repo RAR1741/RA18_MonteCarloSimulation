@@ -1,6 +1,6 @@
 from Field import Field
 
-for games in range(1, 5, 1):
+for games in range(1, 2, 1):
   field = Field()
   for Time in range(0,150,1):
     if Time <=15:
@@ -10,4 +10,8 @@ for games in range(1, 5, 1):
   field.endgame_scoring()
   field.checkIfWin()
   field.baseline_points()
+
+  field.time_controlled_output()
+
+  field.output.final_print()
 
