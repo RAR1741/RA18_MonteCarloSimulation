@@ -35,8 +35,6 @@ class Output:
         self.red_overflow_cubes = 0
         self.blue_overflow_cubes = 0
 
-
-
         # time that each zone is controlled
         self.red_own_switch_control = 0
         self.red_opposite_switch_control = 0
@@ -72,6 +70,24 @@ class Output:
         self.auto_red_opposite_switch_cubes = 0
         self.auto_red_scale_cubes = 0
         self.auto_blue_scale_cubes = 0
+
+        #POWERUP STUFF
+
+        #red
+        self.red_boost_time = 0
+        self.red_force_time = 0
+        self.red_boost_cubes_used = 0
+        self.red_force_cubes_used = 0
+        self.red_lev_time = 0
+        self.red_lev_used = False
+        
+        #blue
+        self.blue_boost_time = 0
+        self.blue_force_time = 0
+        self.blue_boost_cubes_used = 0
+        self.blue_force_cubes_used = 0
+        self.blue_lev_time = 0
+        self.blue_lev_used = False
 
     def final_print(self):
         print(f"{self.red_one_skill},{self.red_two_skill},{self.red_three_skill},{self.blue_one_skill},{self.blue_two_skill},{self.blue_three_skill}")

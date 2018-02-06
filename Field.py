@@ -234,14 +234,34 @@ class Field:
         else:
             pass
 
-#outputs
+#OUTPUTS
+    #created a method to check when the alliance used levitation
+     #would give it a new value every second - so make another variable
+     def lev_time_when_used(self, is_red_alliance):
+         pass
+
     def powerup_output(self):
         #When it was played
         #create a variable that is set equal to the time when powerup is used?
         #Number of cubes when it was played
         #Was lev used Y/N
-         # - time 
-        pass
+            #time
+        
+        #Red Alliance
+        self.output.red_boost_time = self.red_vault.boost_used
+        self.output.red_force_time = self.red_vault.force_used
+        self.output.red_lev_time = self.red_vault.lev_used
+        self.output.red_boost_cubes_used = self.red_vault.boost_used_cubes
+        self.output.red_force_cubes_used = self.red_vault.force_used_cubes
+        self.output.red_lev_used = self.red_vault.lev
+        
+        #Blue Alliance
+        self.output.blue_boost_time = self.blue_vault.boost_used
+        self.output.blue_force_time = self.blue_vault.force_used
+        self.output.blue_lev_time = self.blue_vault.lev_used
+        self.output.blue_boost_cubes_used = self.blue_vault.boost_used_cubes
+        self.output.blue_force_cubes_used = self.blue_vault.force_used_cubes
+        self.output.blue_lev_used = self.blue_vault.lev
 
     def set_output_skills(self):
         self.output.red_one_skill = self.red_alliance.robots[0].skillRating
