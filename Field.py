@@ -33,7 +33,7 @@ class Field:
         self.blue_vault_cubes = 0
         self.red_baseline = 0
         self.blue_baseline = 0
-
+        
         # Robots
         self.red_alliance  = Alliance(self, True)#self.red_alliance.points to edits
         self.blue_alliance = Alliance(self, False)
@@ -216,17 +216,33 @@ class Field:
     def power_queue(self):
         if self.queue[0] == 1:
             self.red_vault.boost == True
-            
+            self.red_vault.boost_used = self.time
+            self.red_vault.boost_used_cubes = self.red_vault.boost_cubes
         if self.queue[0] == 2:
             self.red_vault.force == True
+            self.red_vault.force_used = self.time
+            self.red_vault.force_used_cubes = self.red_vault.force_cubes
         if self.queue[0] == 3:
             self.blue_vault.boost = True
+            self.blue_vault.boost_used = self.time
+            self.blue_vault.boost_used_cubes = self.blue_vault.boost_cubes
         if self.queue[0] == 4:
             self.blue_vault.force = True
+            self.blue_vault.force_used = self.time
+            self.blue_vault.force_used_cubes = self.blue_vault.force_cubes
+
         else:
             pass
 
 #outputs
+    def powerup_output(self):
+        #When it was played
+        #create a variable that is set equal to the time when powerup is used?
+        #Number of cubes when it was played
+        #Was lev used Y/N
+         # - time 
+        pass
+
     def set_output_skills(self):
         self.output.red_one_skill = self.red_alliance.robots[0].skillRating
         self.output.red_two_skill = self.red_alliance.robots[1].skillRating
@@ -301,8 +317,4 @@ class Field:
         self.output.red_baseline = self.red_baseline
         self.output.blue_baseline = self.blue_baseline
 
-    def powerup_output(self):
-        #When it was played
-        #Number of cubes when it was played
-        #Was lev used Y/N
-        pass
+   
