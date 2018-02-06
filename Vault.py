@@ -6,6 +6,8 @@ class Vault:
         self.force_cubes = 0
         self.lev_cubes = 0
         self.overflow_cubes = 0
+        self.total_cubes = self.boost_cubes + self.force_cubes + self.lev_cubes + self.overflow_cubes
+
         self.is_red_alliance = is_red_alliance
         self.field = field
          # for powerups

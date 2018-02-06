@@ -29,13 +29,16 @@ class Field:
         self.blue_opposite_switch_control = 0
         self.red_scale_control = 0
         self.blue_scale_control = 0
+        self.red_vault_cubes = 0
+        self.blue_vault_cubes = 0
+        self.red_baseline = 0
+        self.blue_baseline = 0
 
         # Robots
         self.red_alliance  = Alliance(self, True)#self.red_alliance.points to edits
         self.blue_alliance = Alliance(self, False)
         self.alliances = [self.blue_alliance.robots, self.red_alliance.robots]
         self.set_output_skills()
-        self.time_controlled_output()
     
     def tick(self, time):
         self.time = time
@@ -52,6 +55,7 @@ class Field:
         print(f"Red Alliance Score : {self.red_alliance.points}")
         print(f"Blue Alliance Score : {self.blue_alliance.points}")
         self.red_vault.power_tick(time)
+        self.blue_vault.power_tick(time)
 
     def auto_tick(self, time):
         self.time = time
@@ -144,32 +148,32 @@ class Field:
                 self.blue_scale_control += 1
         
     def endgame_scoring(self):
-        red_park_counter = 0
-        red_climb_counter = 0
-        blue_park_counter = 0
-        blue_climb_counter = 0
+        self.red_park_counter = 0
+        self.red_climb_counter = 0
+        self.blue_park_counter = 0
+        self.blue_climb_counter = 0
         for alliance in self.alliances:
             for team in alliance:
                 print(f"{team.name} {team.climb} {team.platform}")
                 if team.climb == True and team.is_red_alliance:
                     self.red_alliance.points += 30
-                    red_climb_counter += 1
+                    self.red_climb_counter += 1
                 elif team.climb == True and team.is_red_alliance == False:
                     self.blue_alliance.points += 30
-                    blue_climb_counter += 1
+                    self.blue_climb_counter += 1
                 elif team.platform == True and team.is_red_alliance:
                     self.red_alliance.points += 5
-                    red_park_counter += 1
+                    self.red_park_counter += 1
                 elif team.platform == True and team.is_red_alliance == False:
                     self.blue_alliance.points += 5
-                    blue_park_counter += 1
-        if self.red_vault.lev and red_climb_counter < 3:
-            if red_climb_counter + red_park_counter < 3:
+                    self.blue_park_counter += 1
+        if self.red_vault.lev and self.red_climb_counter < 3:
+            if self.red_climb_counter + self.red_park_counter < 3:
                 self.red_alliance.points += 30
             else:
                 self.red_alliance.points += 25
-        elif self.blue_vault.lev and blue_climb_counter < 3:
-            if blue_climb_counter + blue_park_counter < 3:
+        elif self.blue_vault.lev and self.blue_climb_counter < 3:
+            if self.blue_climb_counter + self.blue_park_counter < 3:
                 self.blue_alliance.points += 30
             else:
                 self.blue_alliance.points += 25
@@ -203,8 +207,10 @@ class Field:
             for team in alliance:
                 if team.is_red_alliance and team.auto_run == True:
                     self.red_alliance.points += 5
+                    self.red_baseline += 1
                 elif team.is_red_alliance == False and team.auto_run == True:
                     self.blue_alliance.points += 5
+                    self.blue_baseline += 1
 
     
     def power_queue(self):
@@ -220,6 +226,7 @@ class Field:
         else:
             pass
 
+#outputs
     def set_output_skills(self):
         self.output.red_one_skill = self.red_alliance.robots[0].skillRating
         self.output.red_two_skill = self.red_alliance.robots[1].skillRating
@@ -235,11 +242,67 @@ class Field:
         self.output.blue_opposite_switch_control = self.blue_opposite_switch_control
         self.output.red_scale_control = self.red_scale_control
         self.output.blue_scale_control = self.blue_scale_control
+    
+    def auto_time_controlled_output(self):
+        self.auto_red_own_switch_control = self.red_own_switch_control
+        self.auto_red_opposite_switch_control = self.red_opposite_switch_control
+        self.auto_blue_own_switch_control = self.blue_own_switch_control
+        self.auto_blue_opposite_switch_control = self.blue_opposite_switch_control
+        self.auto_red_scale_control = self.red_scale_control
+        self.auto_blue_scale_control = self.blue_scale_control         
 
+    def vault_output(self):
+       self.output.red_lev_cubes = self.red_vault.lev_cubes
+       self.output.red_boost_cubes = self.red_vault.boost_cubes
+       self.output.red_force_cubes = self.red_vault.lev_cubes
+       self.output.red_overflow_cubes = self.red_vault.overflow_cubes
 
+       self.output.blue_lev_cubes = self.blue_vault.lev_cubes
+       self.output.blue_boost_cubes = self.blue_vault.boost_cubes
+       self.output.blue_force_cubes = self.blue_vault.force_cubes
+       self.output.blue_overflow_cubes = self.blue_vault.overflow_cubes
 
+    def auto_vault_output(self):
+       self.output.auto_red_lev_cubes = self.red_vault.lev_cubes
+       self.output.auto_red_boost_cubes = self.red_vault.boost_cubes
+       self.output.auto_red_force_cubes = self.red_vault.lev_cubes
+       self.output.auto_red_overflow_cubes = self.red_vault.overflow_cubes
+
+       self.output.auto_blue_lev_cubes = self.blue_vault.lev_cubes
+       self.output.auto_blue_boost_cubes = self.blue_vault.boost_cubes
+       self.output.auto_blue_force_cubes = self.blue_vault.force_cubes
+       self.output.auto_blue_overflow_cubes = self.blue_vault.overflow_cubes
         
-       
-       
+    def endgame_output(self):
+        self.output.red_num_parked = self.red_park_counter
+        self.output.red_num_climbed = self.red_climb_counter
+        self.output.blue_num_climbed = self.blue_climb_counter
+        self.output.blue_num_parked = self.blue_park_counter
         
-        
+    def total_points(self):
+        self.output.red_alliance_total = self.red_alliance.points
+        self.output.blue_alliance_total = self.blue_alliance.points
+
+    def cube_tracking_output(self):
+        self.output.red_own_switch_cubes = self.my_switch.red_cubes
+        self.output.blue_own_switch_cubes = self.their_switch.blue_cubes
+        self.output.red_opposite_switch_cubes = self.their_switch.red_cubes
+        self.output.blue_opposite_switch_cubes =  self.my_switch.blue_cubes
+        self.output.red_scale_cubes = self.scale.red_cubes1
+        self.output.blue_scale_cubes = self.scale.blue_cubes1
+
+    def auto_cube_tracking_output(self):
+        self.output.auto_red_own_switch_cubes = self.my_switch.red_cubes
+        self.output.auto_blue_own_switch_cubes = self.their_switch.blue_cubes
+        self.output.auto_red_opposite_switch_cubes = self.their_switch.red_cubes
+        self.output.auto_blue_opposite_switch_cubes =  self.my_switch.blue_cubes
+        self.output.auto_red_scale_cubes = self.scale.red_cubes1
+        self.output.auto_blue_scale_cubes = self.scale.blue_cubes1
+        self.output.red_baseline = self.red_baseline
+        self.output.blue_baseline = self.blue_baseline
+
+    def powerup_output(self):
+        #When it was played
+        #Number of cubes when it was played
+        #Was lev used Y/N
+        pass
