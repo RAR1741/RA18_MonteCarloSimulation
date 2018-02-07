@@ -11,7 +11,7 @@ from Output import Output
 
 class Field:
     def __init__(self):
-        print("init")
+        #print("init")
         # Game things
         self.red_vault = Vault(True, self)
         self.blue_vault = Vault(False, self)
@@ -42,18 +42,18 @@ class Field:
     
     def tick(self, time):
         self.time = time
-        print(f"Boost|Force|Lev : {self.red_vault.boost_cubes}|{self.red_vault.force_cubes}|{self.red_vault.lev_cubes}")
-        print(f"My Red Cubes|Blue Cubes : {self.my_switch.red_cubes}|{self.my_switch.blue_cubes}")
-        print(f"Their Red Cubes|Blue Cubes : {self.their_switch.red_cubes}|{self.their_switch.blue_cubes}")
-        print(f"Red Scale Cubes|Blue Scale Cubes : {self.scale.red_cubes1}|{self.scale.blue_cubes1}")
+        #print(f"Boost|Force|Lev : {self.red_vault.boost_cubes}|{self.red_vault.force_cubes}|{self.red_vault.lev_cubes}")
+        #print(f"My Red Cubes|Blue Cubes : {self.my_switch.red_cubes}|{self.my_switch.blue_cubes}")
+        #print(f"Their Red Cubes|Blue Cubes : {self.their_switch.red_cubes}|{self.their_switch.blue_cubes}")
+        #print(f"Red Scale Cubes|Blue Scale Cubes : {self.scale.red_cubes1}|{self.scale.blue_cubes1}")
         for alliance in self.alliances:
             for team in alliance:
                 team.tick(time)
         self.my_switch_points()
         self.their_switch_points()
         self.scale_points()
-        print(f"Red Alliance Score : {self.red_alliance.points}")
-        print(f"Blue Alliance Score : {self.blue_alliance.points}")
+        # print(f"Red Alliance Score : {self.red_alliance.points}")
+        # print(f"Blue Alliance Score : {self.blue_alliance.points}")
         self.red_vault.power_tick(time)
         self.blue_vault.power_tick(time)
 
@@ -62,9 +62,11 @@ class Field:
         for alliance in self.alliances:
             for team in alliance:
                 team.tick(time)
+                team.baseline()
         self.auto_my_switch_points()
         self.auto_their_switch_points()
         self.auto_scale_points()
+        
     
 
     def add_random_vault_cube(self, is_red_alliance):
@@ -89,8 +91,8 @@ class Field:
         self.scale.add_scale_cube(is_red_alliance)         
     
     def checkIfWin(self):
-        print(f"Red Alliance Score : {self.red_alliance.points}")
-        print(f"Blue Alliance Score : {self.blue_alliance.points}")
+        #print(f"Red Alliance Score : {self.red_alliance.points}")
+        #print(f"Blue Alliance Score : {self.blue_alliance.points}")
         if self.red_alliance.points > self.blue_alliance.points:
             print(f"The Red Alliance won!")
         elif self.blue_alliance.points > self.red_alliance.points:

@@ -3,7 +3,7 @@ import numpy
 
 class Robots:
   def __init__(self, field, is_red_alliance, name, skillRating):
-    print("Robot init")
+    #print("Robot init")
     self.field = field
     self.is_red_alliance = is_red_alliance
     self.name = name
@@ -22,12 +22,15 @@ class Robots:
     self.can_auto = True
   
   def tick(self, time):
-    print(f"Time({self.name}):{self.action_time}:{self.randomPick}")
+    # print(f"Time({self.name}):{self.action_time}:{self.randomPick}")
     self.action_time -= 1
     if self.action_time <= 1:
       if self.action_success_rate >= random.randint(1,100):
           self.do_action()
+          
       if time < 15:
+        print("=============================")
+        print(f"{self.name}:{time}")
         self.baseline()
         self.get_new_action()
       elif time <120:
@@ -42,14 +45,12 @@ class Robots:
           else:
             self.platform = True
 
-          
+
 
   def get_new_action(self):
     self.randomPick = random.randint(1,4)
-
-    
    
-
+   
     # Robot Skill Level 1
     if self.skillRating == 1:
       if self.randomPick == 0 or self.randomPick == 1 or self.randomPick == 2 or self.randomPick == 3:
@@ -306,6 +307,6 @@ class Robots:
   
   def baseline(self):
     self.auto_success = random.randint(1,100)
-    if self.auto_success < 85 and self.can_auto == True:
+    if self.auto_success < 90 and self.can_auto == True:
       self.auto_run = True
       self.can_auto == False      

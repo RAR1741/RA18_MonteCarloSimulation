@@ -1,6 +1,6 @@
 from Field import Field
 
-for games in range(0, 100, 1):
+for games in range(0, 10, 1):
   field = Field()
   for Time in range(0,150,1):
     if Time <=15:
@@ -22,6 +22,6 @@ for games in range(0, 100, 1):
   field.cube_tracking_output()
 
 
-  field.output.final_print()
+  #field.output.final_print()
 
   field.output.write_file()
