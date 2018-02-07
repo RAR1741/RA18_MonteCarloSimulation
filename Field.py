@@ -237,8 +237,13 @@ class Field:
 #OUTPUTS
     #created a method to check when the alliance used levitation
      #would give it a new value every second - so make another variable
-     def lev_time_when_used(self, is_red_alliance):
-         pass
+    def last_time_lev_used(self, is_red_alliance):
+        if self.red_vault.lev_method_used == 0 and self.red_vault.lev == True:
+            self.output.red_lev_time = self.time
+            self.red_vault.lev_method_used += 1
+        elif self.blue_vault.lev_method_used == 0 and self.blue_vault.lev == True:
+            self.output.blue_lev_time = self.time
+            self.blue_vault.lev_method_used += 1
 
     def powerup_output(self):
         #When it was played

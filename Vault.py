@@ -27,7 +27,11 @@ class Vault:
         self.force_used_cubes = 0
         self.boost_used_cubes = 0
         self.lev_used = 0
-        #I used the lev boolean to see if robots climbed
+        #used the below variable to make sure the variable was set to time ony once
+        self.lev_method_used = 0
+
+
+        
     def add_random_cube(self):
         if self.boost_cubes == 3 and self.force_cubes == 3 and self.lev_cubes == 3:
             self.overflow_cubes += 1

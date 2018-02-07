@@ -1,6 +1,6 @@
 from Field import Field
 
-for games in range(1, 2, 1):
+for games in range(0, 100, 1):
   field = Field()
   for Time in range(0,150,1):
     if Time <=15:
@@ -23,3 +23,5 @@ for games in range(1, 2, 1):
 
 
   field.output.final_print()
+
+  field.output.write_file()
