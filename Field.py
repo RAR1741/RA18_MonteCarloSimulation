@@ -93,11 +93,11 @@ class Field:
     def power_queue(self):
         if len(self.queue) > 0:
             if self.queue[0] == 1:
-                self.red_vault.boost == True
+                self.red_vault.boost = True
                 self.red_vault.boost_used = self.time
                 self.red_vault.boost_used_cubes = self.red_vault.boost_cubes
             elif self.queue[0] == 2:
-                self.red_vault.force == True
+                self.red_vault.force = True
                 self.red_vault.force_used = self.time
                 self.red_vault.force_used_cubes = self.red_vault.force_cubes
             elif self.queue[0] == 3:
