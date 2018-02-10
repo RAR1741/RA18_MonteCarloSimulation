@@ -31,7 +31,6 @@ class Robots:
       if time < 15:
         print("=============================")
         print(f"{self.name}:{time}")
-        self.baseline()
         self.get_new_action()
       elif time <120:
         self.get_new_action()
@@ -306,7 +305,8 @@ class Robots:
       self.climbing_success_rate = 95
   
   def baseline(self):
-    self.auto_success = random.randint(1,100)
-    if self.auto_success < 90 and self.can_auto == True:
-      self.auto_run = True
-      self.can_auto == False      
+    if self.can_auto == True:
+      self.auto_success = random.randint(1,100)
+      if self.auto_success <= 90:
+        self.auto_run = True
+        self.can_auto = False      

@@ -54,8 +54,62 @@ class Field:
         self.scale_points()
         # print(f"Red Alliance Score : {self.red_alliance.points}")
         # print(f"Blue Alliance Score : {self.blue_alliance.points}")
-        self.red_vault.power_tick(time)
-        self.blue_vault.power_tick(time)
+        self.red_power_tick(time)
+        self.blue_power_tick(time)
+        self.power_queue()
+        
+        self.red_vault.lev_check()
+        self.blue_vault.lev_check()
+
+    def red_power_tick(self, time):
+        if self.red_vault.power_time > 0:
+            self.red_vault.power_time -= 1
+        elif self.red_vault.power_time == 0:
+            if len(self.queue) > 0:
+                self.queue.remove(self.queue[0])
+            elif random.randint(1,60) > 59:
+                self.red_vault.powerup()
+        else:
+            if random.randint(1,60) > 59:
+                self.red_vault.powerup()
+
+    def blue_power_tick(self, time):
+        if self.blue_vault.power_time > 0:
+            self.blue_vault.power_time -= 1
+        elif self.blue_vault.power_time == 0:
+            if len(self.queue) > 0:
+                self.queue.remove(self.queue[0])
+            elif random.randint(1,60) > 59:
+                self.blue_vault.powerup()
+        else:
+            if random.randint(1,60) > 59:
+                self.blue_vault.powerup()    
+
+    # 1 is Red Alliance Boost
+    # 2 is Red Alliance Force
+    # 3 is Blue Alliance Boost
+    # 4 is Blue Alliance Force
+    #make sure you set both red and blue "can use" to false
+    def power_queue(self):
+        if len(self.queue) > 0:
+            if self.queue[0] == 1:
+                self.red_vault.boost == True
+                self.red_vault.boost_used = self.time
+                self.red_vault.boost_used_cubes = self.red_vault.boost_cubes
+            elif self.queue[0] == 2:
+                self.red_vault.force == True
+                self.red_vault.force_used = self.time
+                self.red_vault.force_used_cubes = self.red_vault.force_cubes
+            elif self.queue[0] == 3:
+                self.blue_vault.boost = True
+                self.blue_vault.boost_used = self.time
+                self.blue_vault.boost_used_cubes = self.blue_vault.boost_cubes
+            elif self.queue[0] == 4:
+                self.blue_vault.force = True
+                self.blue_vault.force_used = self.time
+                self.blue_vault.force_used_cubes = self.blue_vault.force_cubes
+            else:
+                pass
 
     def auto_tick(self, time):
         self.time = time
@@ -208,33 +262,14 @@ class Field:
         for alliance in self.alliances:
             for team in alliance:
                 if team.is_red_alliance and team.auto_run == True:
+                    print(f"Red did baseline: {team.name}")
                     self.red_alliance.points += 5
                     self.red_baseline += 1
                 elif team.is_red_alliance == False and team.auto_run == True:
+                    print(f"Blue did baseline: {team.name}")
                     self.blue_alliance.points += 5
                     self.blue_baseline += 1
 
-    
-    def power_queue(self):
-        if self.queue[0] == 1:
-            self.red_vault.boost == True
-            self.red_vault.boost_used = self.time
-            self.red_vault.boost_used_cubes = self.red_vault.boost_cubes
-        if self.queue[0] == 2:
-            self.red_vault.force == True
-            self.red_vault.force_used = self.time
-            self.red_vault.force_used_cubes = self.red_vault.force_cubes
-        if self.queue[0] == 3:
-            self.blue_vault.boost = True
-            self.blue_vault.boost_used = self.time
-            self.blue_vault.boost_used_cubes = self.blue_vault.boost_cubes
-        if self.queue[0] == 4:
-            self.blue_vault.force = True
-            self.blue_vault.force_used = self.time
-            self.blue_vault.force_used_cubes = self.blue_vault.force_cubes
-
-        else:
-            pass
 
 #OUTPUTS
     #created a method to check when the alliance used levitation
@@ -255,6 +290,7 @@ class Field:
             #time
         
         #Red Alliance
+        self.output.red_boost = self.red_vault.boost
         self.output.red_boost_time = self.red_vault.boost_used
         self.output.red_force_time = self.red_vault.force_used
         self.output.red_lev_time = self.red_vault.lev_used
@@ -341,6 +377,7 @@ class Field:
         self.output.auto_blue_opposite_switch_cubes =  self.my_switch.blue_cubes
         self.output.auto_red_scale_cubes = self.scale.red_cubes1
         self.output.auto_blue_scale_cubes = self.scale.blue_cubes1
+        print(f"Red: {self.red_baseline}, Blue: {self.blue_baseline}")
         self.output.red_baseline = self.red_baseline
         self.output.blue_baseline = self.blue_baseline
 
